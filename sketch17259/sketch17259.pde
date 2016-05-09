@@ -1,10 +1,13 @@
 /* OpenProcessing Tweak of *@*http://www.openprocessing.org/sketch/17259*@* */
 /* !do not delete the line above, required for linking your tweak if you upload again */
 //fireworks - born of insomnia
+PImage bg, bg_tambah;
 Firework[] fs = new Firework[10];
 boolean once;
 void setup(){
   size(400,400);
+  bg = loadImage("bg1.png");
+  bg_tambah = loadImage("awan.png");
   smooth();
   for (int i = 0; i < fs.length; i++){
     fs[i] = new Firework();
@@ -13,10 +16,12 @@ void setup(){
 void draw(){
   noStroke();
   fill(50,0,40,20);
+  image(bg_tambah, 0, 0);
   rect(0,0,width,height);
   for (int i = 0; i < fs.length; i++){
     fs[i].draw();
   }
+  image(bg, 0, 0);
 }
 void mouseReleased(){
   once = false;
