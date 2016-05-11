@@ -1,13 +1,18 @@
 /* OpenProcessing Tweak of *@*http://www.openprocessing.org/sketch/17259*@* */
 /* !do not delete the line above, required for linking your tweak if you upload again */
 //fireworks - born of insomnia
+import ddf.minim.*;
 PImage bg, bg_tambah;
-Firework[] fs = new Firework[1];
+Firework[] fs = new Firework[10];
 boolean once;
+AudioSnippet flush;
+Minim file;
 void setup(){
   size(400,400);
   bg = loadImage("bg1.png");
   bg_tambah = loadImage("awan.png");
+  file = new Minim(this);
+  flush = file.loadSnippet("LOOKOUT.WAV");
   smooth();
   for (int i = 0; i < fs.length; i++){
     fs[i] = new Firework();
@@ -26,6 +31,8 @@ void draw(){
 void mouseReleased(){
   once = false;
   for (int i = 0; i < fs.length; i++){
+    flush.rewind();
+    flush.play();
     if((fs[i].hidden)&&(!once)){
       fs[i].launch();
       once = true;
