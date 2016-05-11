@@ -2,7 +2,7 @@
 /* !do not delete the line above, required for linking your tweak if you upload again */
 //fireworks - born of insomnia
 PImage bg, bg_tambah;
-Firework[] fs = new Firework[10];
+Firework[] fs = new Firework[1];
 boolean once;
 void setup(){
   size(400,400);
