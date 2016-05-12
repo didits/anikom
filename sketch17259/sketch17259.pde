@@ -2,22 +2,26 @@
 /* !do not delete the line above, required for linking your tweak if you upload again */
 //fireworks - born of insomnia
 import ddf.minim.*;
+
 PImage bg, bg_tambah;
 Firework[] fs = new Firework[10];
 boolean once;
-AudioSnippet flush;
+AudioSnippet flush, meledak;
 Minim file;
+
 void setup(){
   size(400,400);
   bg = loadImage("bg1.png");
   bg_tambah = loadImage("awan.png");
   file = new Minim(this);
   flush = file.loadSnippet("LOOKOUT.WAV");
+  meledak = file.loadSnippet("LEDAKAN.WAV");
   smooth();
   for (int i = 0; i < fs.length; i++){
     fs[i] = new Firework();
   }
 }
+
 void draw(){
   noStroke();
   fill(50,0,40,20);
@@ -28,6 +32,7 @@ void draw(){
   }
   image(bg, 0, 0);
 }
+
 void mouseReleased(){
   once = false;
   for (int i = 0; i < fs.length; i++){
@@ -39,6 +44,7 @@ void mouseReleased(){
     }
   }
 }
+
 class Firework{
   float x, y, oldX,oldY, ySpeed, targetX, targetY, explodeTimer, flareWeight, flareAngle;
   int flareAmount, duration;
@@ -49,6 +55,7 @@ class Firework{
     exploded = false;
     hidden = true;
   }
+  
   void draw(){
     if((launched)&&(!exploded)&&(!hidden)){
       launchMaths();
@@ -87,6 +94,7 @@ class Firework{
     exploded = false;
     hidden = false;
   }
+  
   void launchMaths(){
     oldX = x;
     oldY = y;
@@ -97,12 +105,16 @@ class Firework{
       explode();
     }
   }
+  
   void explode(){
+    meledak.rewind();
+    meledak.play();
     explodeTimer = 0;
     launched = false;
     exploded = true;
     hidden = false;
   }
+  
   void explodeMaths(){
     if(explodeTimer < duration){
       explodeTimer+= 0.4;
@@ -110,6 +122,7 @@ class Firework{
       hide();
     }
   }
+  
   void hide(){
     launched = false;
     exploded = false;
