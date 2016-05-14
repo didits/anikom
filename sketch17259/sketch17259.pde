@@ -50,6 +50,7 @@ class Firework{
   int flareAmount, duration;
   boolean launched,exploded,hidden;
   color flare;
+  int o;
   Firework(){
     launched = false;
     exploded = false;
@@ -68,12 +69,43 @@ class Firework{
       noStroke();
       strokeWeight(flareWeight);
       stroke(flare);
-      for(int i = 0; i < flareAmount + 1; i++){
-          pushMatrix();
-          translate(x,y);
-          point(sin(radians(i*flareAngle))*explodeTimer,cos(radians(i*flareAngle))*explodeTimer);
-          popMatrix();
-       }
+      if(o==1){
+        for(int i = 0; i < flareAmount + 1; i++){
+            pushMatrix();
+            translate(x,y);
+            point(sin(radians(i*flareAngle))*explodeTimer,cos(radians(i*flareAngle))*explodeTimer);
+            popMatrix();
+         }
+     }else if(o==2){
+       for(int i = 0; i < flareAmount + 1; i++){
+            pushMatrix();
+            translate(x,y);
+            point((i*2)*sin(i/5.0)*explodeTimer,(i*2)*cos(i/5.0)*explodeTimer);
+            popMatrix();
+         }
+     }else if(o==3){
+       for(int i = 0; i < flareAmount + 1; i++){
+            pushMatrix();
+            translate(x,y);
+            point((i*2)*cos(i/5.0)*explodeTimer,(i*2)*cos(i/5.0)*explodeTimer);
+            popMatrix();
+         }
+     }else if(o==4){
+        for(int i = 0; i < flareAmount + 1; i++){
+            pushMatrix();
+            translate(x,y);
+            point((i*2)*sin(i/5.0)*explodeTimer,(i*2)*cos(flareAmount/5.0)*explodeTimer);
+            popMatrix();
+         }
+     }else if(o==5){
+        for(int i = 0; i < flareAmount + 1; i++){
+            pushMatrix();
+            translate(x,y);
+             point(sin(radians(flareAmount*4))*explodeTimer,sin(radians(4*flareAngle))*explodeTimer);
+             point(sin(radians(i*4))*explodeTimer,cos(radians(i*flareAngle))*explodeTimer);
+            popMatrix();
+         }
+     }
     }
     if((!launched)&&(!exploded)&&(hidden)){
       //do nothing
@@ -93,6 +125,8 @@ class Firework{
     launched = true;
     exploded = false;
     hidden = false;
+    o=int(random(5));
+    //o=5;
   }
   
   void launchMaths(){
