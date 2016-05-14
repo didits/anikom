@@ -3,15 +3,16 @@
 //fireworks - born of insomnia
 import ddf.minim.*;
 
-PImage bg, bg_tambah;
+PImage bg, bg_tambah, bg_2;
 Firework[] fs = new Firework[10];
-boolean once;
+boolean once, bg_kode=true;
 AudioSnippet flush, meledak;
 Minim file;
 
 void setup(){
   size(400,400);
   bg = loadImage("bg1.png");
+  bg_2 = loadImage("bg_kota.png");
   bg_tambah = loadImage("awan.png");
   file = new Minim(this);
   flush = file.loadSnippet("LOOKOUT.WAV");
@@ -30,19 +31,29 @@ void draw(){
   for (int i = 0; i < fs.length; i++){
     fs[i].draw();
   }
-  image(bg, 0, 0);
+  change_bg(bg_kode);
 }
-
-void mouseReleased(){
-  once = false;
-  for (int i = 0; i < fs.length; i++){
-    flush.rewind();
-    flush.play();
-    if((fs[i].hidden)&&(!once)){
-      fs[i].launch();
-      once = true;
+void change_bg(boolean kode){
+    if(kode == true){
+      image(bg,0,0);
     }
-  }
+    else image(bg_2,0,0);
+}
+void mousePressed(){
+   if (mouseButton == LEFT){
+      once = false;
+      for (int i = 0; i < fs.length; i++){
+        flush.rewind();
+        flush.play();
+        if((fs[i].hidden)&&(!once)){
+          fs[i].launch();
+          once = true;
+        }
+      }
+   }
+   else{
+       bg_kode = !bg_kode;
+   }
 }
 
 class Firework{
