@@ -3,17 +3,19 @@
 //fireworks - born of insomnia
 import ddf.minim.*;
 
-PImage bg, bg_tambah, bg_2;
+PImage bg, bg_tambah, bg_2, bg_3;
 Firework[] fs = new Firework[10];
 boolean once, bg_kode=true;
+int fx=0;
 AudioSnippet flush, meledak;
 Minim file;
 
 void setup(){
   size(400,400);
-  bg = loadImage("bg1.png");
+  bg = loadImage("bg_pantai.png");
   bg_2 = loadImage("bg_kota.png");
-  bg_tambah = loadImage("awan.png");
+  bg_3 = loadImage("bg_desa.png");
+  bg_tambah = loadImage("awan2.PNG");
   file = new Minim(this);
   flush = file.loadSnippet("LOOKOUT.WAV");
   meledak = file.loadSnippet("LEDAKAN.WAV");
@@ -25,19 +27,26 @@ void setup(){
 
 void draw(){
   noStroke();
-  fill(50,0,40,20);
+  //fill(50,0,40,20);
+  fill(0,26,51,140);
   image(bg_tambah, 0, 0);
   rect(0,0,width,height);
   for (int i = 0; i < fs.length; i++){
     fs[i].draw();
   }
-  change_bg(bg_kode);
+  change_bg(fx);
 }
-void change_bg(boolean kode){
-    if(kode == true){
+void change_bg(int kode){
+    if(kode%3 == 0){
       image(bg,0,0);
     }
-    else image(bg_2,0,0);
+    else if (kode%3==1){
+      image(bg_2,0,0);
+    }
+    else image(bg_3,0,0);
+    if(kode > 6){
+      kode--;
+    }
 }
 void mousePressed(){
    if (mouseButton == LEFT){
@@ -52,7 +61,7 @@ void mousePressed(){
       }
    }
    else{
-       bg_kode = !bg_kode;
+       fx += 1;
    }
 }
 
